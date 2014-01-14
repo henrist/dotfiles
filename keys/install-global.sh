@@ -1,4 +1,5 @@
 #### SSH KEYS
+# TODO: Using same key for root is probably a bad idea?
 
 # Get my keys
 mkdir tmp
@@ -19,3 +20,5 @@ chmod 644 ~henrik/.ssh/id_henrist.pub ~root/.ssh/id_henrist.pub
 
 # Remove keys from this dir
 rm tmp -Rf
+
+echo "You have to use ssh-agent og move id_henrist to id_rsa or find another solution to use the key."
