@@ -2,11 +2,16 @@
 
 # tmux
 cd tmux
-./install-global.sh
+./install.sh
 cd ..
 
 # ssh keys
 cd keys
-./install-global.sh
+./install.sh
+cd ..
+
+# vim
+cd vim
+./install.sh
 cd ..
 

@@ -1,0 +1,4 @@
+#!/bin/bash
+ssh-add -t 3600 ~/.ssh/id_henrist
+bash -i
+

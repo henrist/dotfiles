@@ -1,0 +1,2 @@
+#!/bin/bash
+alias key='ssh-agent bash ~/myconfig/bash/key_wrapper'
