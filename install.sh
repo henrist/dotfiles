@@ -15,3 +15,8 @@ cd vim
 ./install.sh
 cd ..
 
+# git
+cd git
+./install.sh
+cd ..
+

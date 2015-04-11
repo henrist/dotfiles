@@ -1,0 +1,13 @@
+[user]
+	email = henrist@henrist.net
+	name = Henrik Steen
+
+[push]
+	default = simple
+
+[alias]
+	st = status -bs
+	l = log --online --decorate --graph --all
+
+[core]
+	editor = vim
