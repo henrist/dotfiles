@@ -1,2 +1,2 @@
-source /henrist/henrik/homes/vx-henrik/myconfig/vim/ide.vim
-source /henrist/henrik/homes/vx-henrik/myconfig/vim/core.vim
+source ~/myconfig/vim/ide.vim
+source ~/myconfig/vim/core.vim

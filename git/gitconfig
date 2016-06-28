@@ -7,7 +7,7 @@
 
 [alias]
 	st = status -bs
-	l = log --online --decorate --graph --all
+	l = log --oneline --decorate --graph --all
 
 [core]
 	editor = vim

@@ -1,9 +1,0 @@
-#!/bin/bash
-alias key='ssh-agent bash ~/myconfig/bash/key_wrapper'
-
-#if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-        #export TERM='xterm-256color'
-        export TERM='screen-256color'
-#else
-#        export TERM='xterm-color'
-#fi
