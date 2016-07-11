@@ -9,3 +9,6 @@ $ cd ~/myconfig
 $ ./install.sh
 ```
 
+## To do
+* Fix terminal issues when on different distos
+
