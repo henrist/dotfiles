@@ -4,12 +4,12 @@
 VIMRC="$(pwd)/vimrc"
 
 if [ -e ~/.vimrc ]; then
-    echo "Vim is already set up, trying to upgrade"
+    info "Vim is already set up, trying to upgrade"
 
     cd ~/.vim/bundle/Vundle.vim
     git pull
 else
-    echo "Setting up vim-config"
+    info "Setting up vim-config"
 
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi

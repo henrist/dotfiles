@@ -2,7 +2,7 @@
 
 set -e
 
-function echo() {
+info() {
     DIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
-    builtin echo $(basename $DIR): $1;
+    echo $(basename $DIR): $1;
 }
