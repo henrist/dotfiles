@@ -11,3 +11,5 @@
 
 [core]
 	editor = vim
+[credential]
+	helper = cache
