@@ -1,22 +1,11 @@
 #!/bin/bash
 
-# tmux
-cd tmux
-./install.sh
-cd ..
+setup() {
+    (cd $1 && ./install.sh)
+}
 
-# ssh keys
-cd keys
-./install.sh
-cd ..
-
-# vim
-cd vim
-./install.sh
-cd ..
-
-# git
-cd git
-./install.sh
-cd ..
-
+setup bash
+setup git
+setup keys
+setup tmux
+setup vim
