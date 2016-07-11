@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function setup_keys {
+setup_keys() {
     if [ -z $SSH_AGENT_PID ]; then
         eval $(ssh-agent)
     fi
@@ -11,6 +11,22 @@ function setup_keys {
 if [ -e ~/.ssh/id_henrist ]; then
     alias key='setup_keys'
 fi
+
+export EDITOR=vim
+
+# PS1 for git
+source ~/myconfig/bash/git-ps1.sh
+
+# Append commands to the bash command history file (~/.bash_history)
+# instead of overwriting it.
+shopt -s histappend
+
+# Append commands to the history every time a prompt is shown,
+# instead of after closing the session.
+PROMPT_COMMAND='history -a'
+
+# Make grep more user friendly
+alias grep='grep --color=auto --exclude-dir=\.git'
 
 #if [ -e /usr/share/terminfo/x/xterm-256color ]; then
 #        #export TERM='xterm-256color'
