@@ -28,6 +28,11 @@ PROMPT_COMMAND='history -a'
 # Make grep more user friendly
 alias grep='grep --color=auto --exclude-dir=\.git'
 
+# Allow for forward-search with ctrl+s (as opposite to ctrl+r)
+# Deactivate XON/XOFF flow control
+# See http://stackoverflow.com/a/791800
+[[ $- == *i* ]] && stty -ixon
+
 #if [ -e /usr/share/terminfo/x/xterm-256color ]; then
 #        #export TERM='xterm-256color'
 #        export TERM='screen-256color'
