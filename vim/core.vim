@@ -1,10 +1,5 @@
-" These are the essential settings I need. It serves as a standalone, minimal
-" configuration.
-
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                    GENERAL OPTIONS
+"                    Behavior
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "Enable listchars
@@ -16,14 +11,6 @@ set hidden
 " (i) Enable visualbell instead of beeping.
 " (ii) Set type of visualbell to no type - ie. disable all bells completely.
 set visualbell t_vb=
-
-" If the feature is available,mark any line that exceeds 80 columns with a red
-" strikethrough on the 81st column. Kudos to Damian Conway for this.
-" Availablie if vim version >= 7.3.
-if exists("&colorcolumn")
-    highlight ColorColumn ctermbg=red
-    call matchadd('ColorColumn', '\%81v', 100)
-endif
 
 " I disable backup as I think it litters up my directories. Best practice
 " dictates that I should use version control anyway.
@@ -56,14 +43,12 @@ set nojoinspaces
 " relace it with '@'-lines
 set display+=lastline
 
-
 " This will probably be set automatically in most terminals,
 " but I set it explicitly because it is applicable to all terminals I'm likely
 " to work with
 set ttyfast
 
 if exists("&wildmenu")
-
     "First complete till longest common string. If more than one match, list
     "all matches."
     set wildmode=longest,list
@@ -94,6 +79,27 @@ if has('persistent_undo')
   set undofile
 endif
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                       Appearance
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+silent! colorscheme molokai
+
+" 80 characters line
+set colorcolumn=81,121
+highlight ColorColumn ctermbg=Black ctermfg=DarkRed
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                       Formatting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set shiftwidth=4 tabstop=4 softtabstop=4 expandtab autoindent
+autocmd FileType html,javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType make setlocal noexpandtab
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       MAPPINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -123,11 +129,15 @@ nnoremap <leader><cr> <c-]>
 nnoremap H 0
 nnoremap L $
 
+" FZF (fuzzy file search)
+nmap <c-p> :FZF<cr>
+
+" Generate ctags
+noremap \ct :!ctags -R .<cr><cr>
+
 "Map jk to Escape for easier mode switching"
 inoremap jk <esc>
 
 " Extremely crude mappings for timestamps.
 :nnoremap <leader>t o<Esc>"=strftime("%Y, Week %V, %A %B %d at %X %Z: ")<C-M>pA
 :nnoremap <leader>T O<Esc>"=strftime("%Y, Week %V, %A %B %d at %X %Z: ")<C-M>pA
-
-silent! colorscheme molokai

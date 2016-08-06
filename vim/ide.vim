@@ -22,9 +22,15 @@ Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-sleuth'
 
 Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/syntastic'
+
+Plugin 'craigemery/vim-autotag'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+Plugin 'editorconfig/editorconfig-vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       PLUGIN CONFIGURATION
