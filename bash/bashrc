@@ -15,7 +15,7 @@ fi
 export EDITOR=vim
 
 # PS1 for git
-source ~/myconfig/bash/git-ps1.sh
+source ~/dotfiles/bash/git-ps1.sh
 
 # Append commands to the bash command history file (~/.bash_history)
 # instead of overwriting it.

@@ -4,8 +4,8 @@ This will be a repository where I will attempt to add my various configuration f
 
 ## Installation
 ```
-$ git clone git@github.com:henrist/myconfig.git ~/myconfig
-$ cd ~/myconfig
+$ git clone git@github.com:henrist/dotfiles.git ~/dotfiles
+$ cd ~/dotfiles
 $ ./install.sh
 ```
 

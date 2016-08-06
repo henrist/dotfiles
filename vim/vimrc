@@ -1,2 +1,2 @@
-source ~/myconfig/vim/ide.vim
-source ~/myconfig/vim/core.vim
+source ~/dotfiles/vim/ide.vim
+source ~/dotfiles/vim/core.vim
