@@ -2,7 +2,7 @@
 --tag-relative=yes
 --exclude=*.log
 --exclude=.git
---exclude=db/*
---exclude=log/*
---exclude=node_modules/*
---exclude=vendor/*
+--exclude=*/db/*
+--exclude=*/log/*
+--exclude=node_modules
+--exclude=*/vendor/*
