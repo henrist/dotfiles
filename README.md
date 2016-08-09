@@ -11,4 +11,4 @@ $ ./install.sh
 
 ## To do
 * Fix terminal issues when on different distos
-
+* Set up `exuberant-ctags`
