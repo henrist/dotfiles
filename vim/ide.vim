@@ -25,7 +25,9 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-sleuth'
 
 Plugin 'pangloss/vim-javascript'
-Plugin 'scrooloose/syntastic'
+
+" Disabled due to not getting it to work properly on Vim 8
+"Plugin 'scrooloose/syntastic'
 
 Plugin 'craigemery/vim-autotag'
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
