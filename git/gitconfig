@@ -7,7 +7,8 @@
 
 [alias]
 	st = status -bs
-	l = log --oneline --decorate --graph --all
+	ll = log --oneline --decorate --graph --all
+	l = log --graph --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --all
 
 [core]
 	editor = vim
