@@ -1,11 +1,11 @@
 #!/bin/bash
-. $(dirname $0)/../include.sh
+set -eu
 
 if [ -e ~/.bashrc ] && grep -q "dotfiles/bash" ~/.bashrc; then
-    info "bashrc is already set up"
+    echo "bashrc is already set up"
 else
     echo ". ~/dotfiles/bash/bashrc" >>~/.bashrc
-    info "bashrc has been set up"
+    echo "bashrc has been set up"
 fi
 
 # (the following should be available through git bash competion)

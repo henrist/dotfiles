@@ -1,13 +1,13 @@
 #!/bin/bash
-. $(dirname $0)/../include.sh
+set -eu
 
 if [ -e ~/.ssh/id_henrist ]; then
-    info "Keys are already set up"
-    exit 2
+    echo "Keys are already set up"
+    exit
 fi
 
 # Get my keys
-info "Pulling ssh-key from hsw.no"
+echo "Pulling ssh-key from hsw.no"
 scp henrik@hsw.no:.ssh/id_henrist* ~/.ssh/
 
 # Add public key

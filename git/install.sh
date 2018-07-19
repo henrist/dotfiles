@@ -1,11 +1,11 @@
 #!/bin/bash
-. $(dirname $0)/../include.sh
+set -eu
 
 if [ -e ~/.gitconfig ]; then
-    info "Git is already set up"
-    exit 2
+    echo "Git is already set up"
+    exit
 fi
 
-info "Setting up git-config"
+echo "Setting up git-config"
 
-ln -s "`pwd`/gitconfig" ~/.gitconfig
+ln -s "$(pwd)/gitconfig" ~/.gitconfig

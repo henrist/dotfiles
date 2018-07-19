@@ -1,8 +1,12 @@
 #!/bin/bash
+set -eu
 
-setup() {
-    (cd $1 && ./install.sh)
-}
+setup() {(
+    echo
+    echo "-- $1 --"
+    cd $1
+    ./install.sh
+)}
 
 setup bash
 setup git
