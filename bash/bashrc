@@ -39,3 +39,16 @@ alias grep='grep --color=auto --exclude-dir=\.git'
 #else
 #        export TERM='xterm-color'
 #fi
+
+gits__report_context() {
+  cat - | sed "s/^/$1/"
+}
+
+gits() {
+  for x in */.git; do
+    (
+      cd "$x/.."
+      git "$@" | gits__report_context "$(dirname "$x") | "
+    )
+  done
+}
