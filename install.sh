@@ -10,6 +10,7 @@ setup() {(
 
 setup bash
 setup git
+setup gnupg
 setup keys
 setup tmux
 setup vim

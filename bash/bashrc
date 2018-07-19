@@ -40,6 +40,11 @@ alias grep='grep --color=auto --exclude-dir=\.git'
 #        export TERM='xterm-color'
 #fi
 
+# Setup GPG-agent
+export GPG_TTY=$(tty)
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpgconf --launch gpg-agent
+
 gits__report_context() {
   cat - | sed "s/^/$1/"
 }
