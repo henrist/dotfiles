@@ -1,7 +1,8 @@
 #!/bin/bash
 set -eu
 
-VIMRC="$(pwd)/vimrc"
+SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
+VIMRC="$SCRIPT_DIR/vimrc"
 AUTOLOAD_DIR="$HOME/.vim/autoload"
 PLUG_VIM="$AUTOLOAD_DIR/plug.vim"
 

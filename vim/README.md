@@ -28,7 +28,13 @@ Inside Vim:
 
 ## Install from this repo
 
-From repo root:
+From the `vim/` directory:
+
+```bash
+./install.sh
+```
+
+Or from repo root:
 
 ```bash
 ./vim/install.sh

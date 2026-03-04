@@ -1,2 +1,3 @@
-source ~/dotfiles/vim/ide.vim
-source ~/dotfiles/vim/core.vim
+let s:vimrc_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+execute 'source ' . fnameescape(s:vimrc_dir . '/ide.vim')
+execute 'source ' . fnameescape(s:vimrc_dir . '/core.vim')
