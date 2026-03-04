@@ -1,47 +1,33 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                       VUNDLE INITIALIZATION
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Run :PluginInstall to install these
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                       PLUGIN INITIALIZATION
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Run :PlugInstall to install these
 
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'gmarik/Vundle.vim'
-call vundle#end()
-filetype plugin indent on
+call plug#begin('~/.vim/plugged')
 
 "Color schemes
-Plugin 'sjl/badwolf'
-Plugin 'tomasr/molokai'
-Plugin 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
 
 "Awesomeness from Tim Pope
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-sleuth'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-sleuth'
 
-Plugin 'pangloss/vim-javascript'
+Plug 'craigemery/vim-autotag'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'editorconfig/editorconfig-vim'
 
-" Disabled due to not getting it to work properly on Vim 8
-"Plugin 'scrooloose/syntastic'
+call plug#end()
+filetype plugin indent on
 
-Plugin 'craigemery/vim-autotag'
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-Plugin 'editorconfig/editorconfig-vim'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       PLUGIN CONFIGURATION
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_check_on_open=0
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_mode_map = {'mode': 'active'}
-let g:syntastic_javascript_checkers = ['jshint']
-
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType java let b:dispatch = 'javac %'
 autocmd FileType tex let b:dispatch = 'pdflatex % -file-line-error'
 
