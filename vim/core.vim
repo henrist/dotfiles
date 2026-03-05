@@ -84,7 +84,9 @@ endif
 "                       Appearance
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-silent! colorscheme molokai
+set termguicolors
+let g:ayucolor = 'dark'
+silent! colorscheme ayu
 
 " 80 characters line
 set colorcolumn=81,121

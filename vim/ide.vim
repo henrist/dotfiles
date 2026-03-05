@@ -8,7 +8,7 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 "Color schemes
-Plug 'tomasr/molokai'
+Plug 'ayu-theme/ayu-vim'
 
 "Awesomeness from Tim Pope
 Plug 'tpope/vim-sensible'
