@@ -8,4 +8,10 @@ fi
 
 echo "Setting up git-config"
 
-ln -s "$(pwd)/gitconfig" ~/.gitconfig
+# Write a regular ~/.gitconfig that includes the dotfiles base config, instead
+# of symlinking. This way tools (gh auth setup-git, Ansible, etc.) can write
+# host-local entries to ~/.gitconfig without mutating the dotfiles checkout.
+cat > ~/.gitconfig <<EOF
+[include]
+	path = $(pwd)/gitconfig
+EOF
