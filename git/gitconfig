@@ -2,15 +2,25 @@
 	email = henrist@henrist.net
 	name = Henrik Steen
 
+[init]
+	defaultBranch = main
+
 [push]
 	default = simple
 
-[alias]
-	st = status -bs
-	ll = log --oneline --decorate --graph --all
-	l = log --graph --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --all
+[pull]
+	rebase = true
 
 [core]
 	editor = vim
+	ignoreCase = false
+
 [credential]
 	helper = cache
+
+[alias]
+	st = status -bs
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	l = log --graph --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph
+	ll = log --graph --pretty=format:'%C(auto)%h%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --graph --all
+	lll = log --oneline --decorate --graph --all
