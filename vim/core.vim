@@ -80,6 +80,36 @@ if has('persistent_undo')
   set undofile
 endif
 
+" Buffer text → local SSH client clipboard (no terminal cell padding / trailing
+" spaces). Reuses tmux OSC 52 hooks when inside tmux; plain OSC 52 otherwise.
+function! s:YankToClientClipboard() abort
+  if v:event.operator isnot# 'y'
+    return
+  endif
+  if index(['', '+', '*'], v:event.regname) < 0
+    return
+  endif
+  let text = join(v:event.regcontents, "\n")
+  if v:event.regtype is# 'V'
+    let text .= "\n"
+  endif
+  if !empty($TMUX)
+    call system('tmux load-buffer -', text)
+    return
+  endif
+  if exists('*echoraw')
+    let b64 = system('base64 | tr -d "\n"', text)
+    if !v:shell_error
+      call echoraw("\e]52;c;" . b64 . "\x07")
+    endif
+  endif
+endfunction
+
+augroup yank_to_client_clipboard
+  autocmd!
+  autocmd TextYankPost * call s:YankToClientClipboard()
+augroup END
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                       Appearance
