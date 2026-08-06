@@ -12,6 +12,8 @@ else
     echo "Setting up vim-config"
 fi
 
+mkdir -p "$HOME/.vim/backups"
+
 if ! [ -e "$PLUG_VIM" ]; then
     mkdir -p "$AUTOLOAD_DIR"
     if command -v curl >/dev/null 2>&1; then

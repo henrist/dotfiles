@@ -72,14 +72,11 @@ set smartcase
 " Highlight search terms
 set hlsearch
 
-" If vim prints an error message, don't immediately close it.
-set debug=msg
-
-" Use persistent undo. Kudos to Ethan Schoonover (@altercation on Github)
-" for this.
 if has('persistent_undo')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
+  let &undodir = expand('~/.vim/backups//')
+  if !isdirectory(expand('~/.vim/backups'))
+    call mkdir(expand('~/.vim/backups'), 'p', 0700)
+  endif
   set undofile
 endif
 
@@ -92,9 +89,7 @@ set termguicolors
 let g:ayucolor = 'dark'
 silent! colorscheme ayu
 
-" 80 characters line
 set colorcolumn=81,121
-highlight ColorColumn ctermbg=Black ctermfg=DarkRed
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,7 +97,6 @@ highlight ColorColumn ctermbg=Black ctermfg=DarkRed
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set shiftwidth=4 tabstop=4 softtabstop=4 expandtab autoindent
-autocmd FileType html,javascript setlocal shiftwidth=4 tabstop=4 softtabstop=4
 autocmd FileType make setlocal noexpandtab
 
 
@@ -135,15 +129,13 @@ nnoremap <leader><cr> <c-]>
 nnoremap H 0
 nnoremap L $
 
-" FZF (fuzzy file search)
-nmap <c-p> :FZF<cr>
+nnoremap <c-p> :FZF<cr>
 
-" Generate ctags
-noremap \ct :!ctags -R .<cr><cr>
+nnoremap \ct :!ctags -R .<cr><cr>
 
 "Map jk to Escape for easier mode switching"
 inoremap jk <esc>
 
 " Extremely crude mappings for timestamps.
-:nnoremap <leader>t o<Esc>"=strftime("%Y, Week %V, %A %B %d at %X %Z: ")<C-M>pA
-:nnoremap <leader>T O<Esc>"=strftime("%Y, Week %V, %A %B %d at %X %Z: ")<C-M>pA
+nnoremap <leader>t o<Esc>"=strftime("%Y, Week %V, %A %B %d at %X %Z: ")<C-M>pA
+nnoremap <leader>T O<Esc>"=strftime("%Y, Week %V, %A %B %d at %X %Z: ")<C-M>pA
