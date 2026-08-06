@@ -28,14 +28,13 @@ if [ -e "$settings" ]; then
 	tmp=$(mktemp "$settings.XXXXXX")
 	jq --arg s "$script" '
 		def h($cmd): {matcher: "", hooks: [{type: "command", command: $cmd, async: true}]};
-		def mh($m; $cmd): {matcher: $m, hooks: [{type: "command", command: $cmd, async: true}]};
 		def ours: ((.command? // "") | tostring) | test("ai-state\\.sh|@ai");
 		def strip: map(if (.hooks | type) == "array" then .hooks |= map(select(ours | not)) else . end)
 		         | map(select((.hooks | type) != "array" or (.hooks | length) > 0));
 		.hooks |= (. // {} | with_entries(.value |= strip))
 		| .hooks.UserPromptSubmit += [h(($s) + " busy")]
 		| .hooks.SubagentStart += [h(($s) + " busy")]
-		| .hooks.PreToolUse += [mh("Monitor|monitor"; ($s) + " busy")]
+		| .hooks.PreToolUse += [h(($s) + " busy")]
 		| .hooks.PermissionRequest += [h(($s) + " wait")]
 		| .hooks.Elicitation += [h(($s) + " wait")]
 		| .hooks.Notification += [h(($s) + " notification")]
@@ -63,7 +62,7 @@ jq -n --arg s "$script" '
 		hooks: {
 			UserPromptSubmit: [{hooks: [{type: "command", command: ($s + " busy")}]}],
 			SubagentStart: [{hooks: [{type: "command", command: ($s + " busy")}]}],
-			PreToolUse: [{matcher: "Monitor|monitor", hooks: [{type: "command", command: ($s + " busy")}]}],
+			PreToolUse: [{hooks: [{type: "command", command: ($s + " busy")}]}],
 			Notification: [{hooks: [{type: "command", command: ($s + " notification")}]}],
 			Stop: [{hooks: [{type: "command", command: ($s + " stop")}]}],
 			SessionEnd: [{hooks: [{type: "command", command: ($s + " clear")}]}]
