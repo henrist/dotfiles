@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Map Claude Code / Grok hook events to tmux window @ai for the tree view.
 # wait = needs you, busy = running, idle = finished (opportunity), unset = none.
+# busy turns monitor-activity off so status/tree don't go red on every tool line.
 #
 # Usage (hook command):
 #   ai-state.sh busy|wait|idle|clear
@@ -15,8 +16,14 @@ set_ai() {
 	[ -n "${TMUX_PANE:-}" ] || return 0
 	if [ "$state" = clear ]; then
 		tmux set -uw -t "$TMUX_PANE" @ai 2>/dev/null || true
+		tmux set -w -t "$TMUX_PANE" monitor-activity on 2>/dev/null || true
 	else
 		tmux set -w -t "$TMUX_PANE" @ai "$state" 2>/dev/null || true
+		if [ "$state" = busy ]; then
+			tmux set -w -t "$TMUX_PANE" monitor-activity off 2>/dev/null || true
+		else
+			tmux set -w -t "$TMUX_PANE" monitor-activity on 2>/dev/null || true
+		fi
 	fi
 }
 
