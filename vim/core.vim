@@ -5,6 +5,10 @@
 "Enable listchars
 set list
 
+if has('mouse')
+  set mouse=a
+endif
+
 "Allow switching between unsaved buffers
 set hidden
 
