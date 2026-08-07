@@ -26,8 +26,9 @@ trap cleanup EXIT
 settings=$HOME/.claude/settings.json
 if [ -e "$settings" ]; then
 	tmp=$(mktemp "$settings.XXXXXX")
+	# Synchronous on purpose: async hooks apply out of order (see ai-state.sh).
 	jq --arg s "$script" '
-		def h($cmd): {matcher: "", hooks: [{type: "command", command: $cmd, async: true}]};
+		def h($cmd): {matcher: "", hooks: [{type: "command", command: $cmd}]};
 		def ours: ((.command? // "") | tostring) | test("ai-state\\.sh|@ai");
 		def strip: map(if (.hooks | type) == "array" then .hooks |= map(select(ours | not)) else . end)
 		         | map(select((.hooks | type) != "array" or (.hooks | length) > 0));
@@ -35,10 +36,12 @@ if [ -e "$settings" ]; then
 		| .hooks.UserPromptSubmit += [h(($s) + " busy")]
 		| .hooks.SubagentStart += [h(($s) + " busy")]
 		| .hooks.PreToolUse += [h(($s) + " busy")]
+		| .hooks.PostToolUse += [h(($s) + " busy")]
 		| .hooks.PermissionRequest += [h(($s) + " wait")]
 		| .hooks.Elicitation += [h(($s) + " wait")]
 		| .hooks.Notification += [h(($s) + " notification")]
 		| .hooks.Stop += [h(($s) + " stop")]
+		| .hooks.SessionStart += [h(($s) + " sessionstart")]
 		| .hooks.SessionEnd += [h(($s) + " clear")]
 	' "$settings" >"$tmp"
 	if cmp -s "$tmp" "$settings"; then
@@ -63,8 +66,10 @@ jq -n --arg s "$script" '
 			UserPromptSubmit: [{hooks: [{type: "command", command: ($s + " busy")}]}],
 			SubagentStart: [{hooks: [{type: "command", command: ($s + " busy")}]}],
 			PreToolUse: [{hooks: [{type: "command", command: ($s + " busy")}]}],
+			PostToolUse: [{hooks: [{type: "command", command: ($s + " busy")}]}],
 			Notification: [{hooks: [{type: "command", command: ($s + " notification")}]}],
 			Stop: [{hooks: [{type: "command", command: ($s + " stop")}]}],
+			SessionStart: [{hooks: [{type: "command", command: ($s + " sessionstart")}]}],
 			SessionEnd: [{hooks: [{type: "command", command: ($s + " clear")}]}]
 		}
 	}

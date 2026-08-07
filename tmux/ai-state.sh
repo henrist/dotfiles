@@ -1,29 +1,38 @@
 #!/usr/bin/env bash
-# Map Claude Code / Grok hook events to tmux window @ai for the tree view.
+# Map Claude Code / Grok hook events to pane-scoped @ai for the tree view.
 # wait = needs you, busy = running, idle = finished (opportunity), unset = none.
 # busy turns monitor-activity off so status/tree don't go red on every tool line.
+# Pane-scoped so two AIs in one window don't fight and a moved pane can't leave
+# its state behind; the tree aggregates panes and hides dots when no AI runs.
+#
+# Hooks must be synchronous: async spawn order is not guaranteed and busy/wait
+# fire ~50ms apart around permission prompts (PreToolUse comes BEFORE the
+# dialog, not after the grant — PostToolUse is what restores busy).
+# Known gap (Claude Code 2.1.224): no hook fires on Esc interrupt or dialog
+# cancel, so the last state sticks until the next real event.
 #
 # Usage (hook command):
 #   ai-state.sh busy|wait|idle|clear
 #   ai-state.sh stop          # stdin: hook JSON — idle unless background work
 #   ai-state.sh notification  # stdin: wait only for known need-you types
+#   ai-state.sh sessionstart  # stdin: clear stale state, except mid-turn compact
 set -eu
 
 action=${1:-}
 
 set_ai() {
-	local state=$1
+	local state=$1 monitor=on
 	[ -n "${TMUX_PANE:-}" ] || return 0
+	[ "$state" = busy ] && monitor=off
+	# set -uw drops window-scoped @ai left by the pre-pane-scoped scheme.
 	if [ "$state" = clear ]; then
-		tmux set -uw -t "$TMUX_PANE" @ai 2>/dev/null || true
-		tmux set -w -t "$TMUX_PANE" monitor-activity on 2>/dev/null || true
+		tmux set -up -t "$TMUX_PANE" @ai \; \
+			set -uw -t "$TMUX_PANE" @ai \; \
+			set -w -t "$TMUX_PANE" monitor-activity on 2>/dev/null || true
 	else
-		tmux set -w -t "$TMUX_PANE" @ai "$state" 2>/dev/null || true
-		if [ "$state" = busy ]; then
-			tmux set -w -t "$TMUX_PANE" monitor-activity off 2>/dev/null || true
-		else
-			tmux set -w -t "$TMUX_PANE" monitor-activity on 2>/dev/null || true
-		fi
+		tmux set -p -t "$TMUX_PANE" @ai "$state" \; \
+			set -uw -t "$TMUX_PANE" @ai \; \
+			set -w -t "$TMUX_PANE" monitor-activity "$monitor" 2>/dev/null || true
 	fi
 }
 
@@ -46,8 +55,6 @@ stop)
 	if [ -n "$reason" ] && [ "$reason" != end_turn ]; then
 		exit 0
 	fi
-	# Grok: still working if monitors/subagents/shells are in flight.
-	# Claude: fields absent → length 0 → idle (correct for a finished turn).
 	n=$(printf '%s' "$input" | jq -r '((.backgroundTasks // .background_tasks // []) | length)' 2>/dev/null || echo 0)
 	if [ "${n:-0}" -gt 0 ] 2>/dev/null; then
 		set_ai busy
@@ -64,8 +71,16 @@ notification)
 		;;
 	esac
 	;;
+sessionstart)
+	input=$(read_input)
+	src=$(printf '%s' "$input" | jq -r '.source // empty' 2>/dev/null || true)
+	# Auto-compact restarts the session mid-turn — the AI is still working.
+	if [ "$src" != compact ]; then
+		set_ai clear
+	fi
+	;;
 *)
-	echo "usage: $0 busy|wait|idle|clear|stop|notification" >&2
+	echo "usage: $0 busy|wait|idle|clear|stop|notification|sessionstart" >&2
 	exit 1
 	;;
 esac
