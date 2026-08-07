@@ -37,10 +37,13 @@ if [ -e "$settings" ]; then
 		| .hooks.SubagentStart += [h(($s) + " busy")]
 		| .hooks.PreToolUse += [h(($s) + " busy")]
 		| .hooks.PostToolUse += [h(($s) + " busy")]
+		| .hooks.PostToolUseFailure += [h(($s) + " busy")]
 		| .hooks.PermissionRequest += [h(($s) + " wait")]
 		| .hooks.Elicitation += [h(($s) + " wait")]
 		| .hooks.Notification += [h(($s) + " notification")]
 		| .hooks.Stop += [h(($s) + " stop")]
+		| .hooks.SubagentStop += [h(($s) + " stop")]
+		| .hooks.StopFailure += [h(($s) + " idle")]
 		| .hooks.SessionStart += [h(($s) + " sessionstart")]
 		| .hooks.SessionEnd += [h(($s) + " clear")]
 	' "$settings" >"$tmp"
@@ -69,6 +72,7 @@ jq -n --arg s "$script" '
 			PostToolUse: [{hooks: [{type: "command", command: ($s + " busy")}]}],
 			Notification: [{hooks: [{type: "command", command: ($s + " notification")}]}],
 			Stop: [{hooks: [{type: "command", command: ($s + " stop")}]}],
+			SubagentStop: [{hooks: [{type: "command", command: ($s + " stop")}]}],
 			SessionStart: [{hooks: [{type: "command", command: ($s + " sessionstart")}]}],
 			SessionEnd: [{hooks: [{type: "command", command: ($s + " clear")}]}]
 		}

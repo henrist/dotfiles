@@ -69,6 +69,9 @@ notification)
 	permission_prompt | elicitation_dialog | agent_needs_input | permission)
 		set_ai wait
 		;;
+	idle_prompt)
+		set_ai idle
+		;;
 	esac
 	;;
 sessionstart)
